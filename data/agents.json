@@ -1,0 +1,121 @@
+[
+  {
+    "id": "22b99e94-b466-4182-b7f4-54b453a54733",
+    "name": "AutoGen Conversational Agent",
+    "description": "A conversational agent built using Microsoft's AutoGen framework, capable of performing complex reasoning tasks through multi-agent collaboration.",
+    "version": "0.2.0",
+    "provider_id": "c7224847-1468-4455-82f6-62d6d1053526",
+    "provider": {
+      "id": "c7224847-1468-4455-82f6-62d6d1053526",
+      "name": "Microsoft AutoGen",
+      "description": "AutoGen is a framework that enables the development of LLM applications using multiple agents that can converse with each other to solve tasks.",
+      "url": "https://microsoft.github.io/autogen/",
+      "created_at": "2025-03-15 13:08:28.123343",
+      "updated_at": "2025-03-15 13:08:28.123345",
+      "logo_url": null,
+      "github_url": "https://github.com/microsoft/autogen",
+      "docs_url": "https://microsoft.github.io/autogen/docs/Getting-Started",
+      "support_email": "autogen-support@microsoft.com",
+      "support_url": null
+    },
+    "framework_id": null,
+    "framework": null,
+    "features": {
+      "planning": "advanced",
+      "memory": [
+        "short_term",
+        "long_term"
+      ],
+      "tool_use": "dynamic",
+      "multi_agent_collaboration": true,
+      "human_in_the_loop": true,
+      "reasoning_frameworks": [
+        "ReAct",
+        "CoT"
+      ],
+      "autonomous": true,
+      "fine_tuning_support": false,
+      "streaming_support": false,
+      "supports_vision": false,
+      "supports_audio": false,
+      "custom_features": {}
+    },
+    "supported_llms": [
+      {
+        "model_name": "GPT-4",
+        "provider": "OpenAI",
+        "min_version": null,
+        "notes": null,
+        "performance_rating": 5
+      },
+      {
+        "model_name": "Claude 3",
+        "provider": "Anthropic",
+        "min_version": null,
+        "notes": null,
+        "performance_rating": 5
+      }
+    ],
+    "vector_stores": [
+      {
+        "name": "FAISS",
+        "provider": "Facebook",
+        "url": null,
+        "description": "In-memory vector store optimized for similarity search",
+        "supported_dimensions": null,
+        "notes": null
+      }
+    ],
+    "memory_stores": [
+      {
+        "name": "Redis",
+        "type": "long_term",
+        "provider": null,
+        "url": null,
+        "description": "Distributed key-value store with persistence options",
+        "notes": null
+      }
+    ],
+    "resource_requirements": {
+      "min_cpu": null,
+      "recommended_cpu": null,
+      "min_ram": null,
+      "recommended_ram": null,
+      "gpu_required": false,
+      "recommended_gpu": null,
+      "estimated_cost_per_hour": null,
+      "notes": null
+    },
+    "domains": [
+      "general",
+      "coding",
+      "research"
+    ],
+    "code_snippets": [
+      {
+        "language": "python",
+        "code": "\nfrom autogen import AssistantAgent, UserProxyAgent\n\n# Create an assistant agent\nassistant = AssistantAgent(\n    name=\"assistant\",\n    llm_config={\n        \"model\": \"gpt-4\",\n        \"api_key\": os.environ.get(\"OPENAI_API_KEY\"),\n    }\n)\n\n# Create a user proxy agent\nuser_proxy = UserProxyAgent(\n    name=\"user_proxy\",\n    human_input_mode=\"TERMINATE\",\n    max_consecutive_auto_reply=10,\n)\n\n# Start the conversation\nuser_proxy.initiate_chat(\n    assistant,\n    message=\"Help me solve the following problem: implement a quicksort algorithm in Python.\"\n)\n                ",
+        "description": "Basic AutoGen Agent Setup",
+        "import_requirements": [
+          "autogen",
+          "os"
+        ]
+      }
+    ],
+    "example_prompts": [],
+    "tags": [
+      "conversational",
+      "coding",
+      "multi-agent",
+      "reasoning"
+    ],
+    "github_url": "https://github.com/microsoft/autogen",
+    "docs_url": "https://microsoft.github.io/autogen/docs/Use-Cases/agent_chat",
+    "demo_url": null,
+    "created_at": "2025-03-15 13:08:28.125138",
+    "updated_at": "2025-03-15 13:08:28.125139",
+    "star_rating": null,
+    "review_count": 0,
+    "installation_count": 0
+  }
+]

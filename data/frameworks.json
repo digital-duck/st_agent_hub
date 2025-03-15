@@ -1,0 +1,12 @@
+[
+  {
+    "id": "3f20e44c-e7ee-4280-afd8-6eca981c0e22",
+    "name": "LlamaIndex",
+    "description": "LlamaIndex is a data framework for LLM applications to ingest, structure, and access private or domain-specific data.",
+    "url": "https://www.llamaindex.ai/",
+    "github_url": "https://github.com/run-llama/llama_index",
+    "created_at": "2025-03-15 13:08:28.124009",
+    "updated_at": "2025-03-15 13:08:28.124011",
+    "version": "0.10.x"
+  }
+]
