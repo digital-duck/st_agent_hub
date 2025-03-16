@@ -1,4 +1,4 @@
-# AI Agent Schema Design
+# Agent Hub Schema Design
 
 ## Overview
 

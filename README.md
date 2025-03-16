@@ -39,7 +39,7 @@ st_agent_hub/
 │   └── notebooks/   # Jupyter notebooks for experiments
 ├── tests/           # Test suite
 ├── scripts/         # Utility scripts
-│   ├── run_app.sh          # create project layout initially
+│   ├── create_project.py   # create project layout initially
 │   └── archive_code.sh     # archive codes when developing with AI assistants
 ├── requirements.txt # Dependencies
 └── README.md          # this file
@@ -63,7 +63,7 @@ st_agent_hub/
 3. Run the application:
 ```bash
 cd src
-streamlit run AI_Agent_Hub.py
+streamlit run Welcome.py
 ```
 
 ## Contributing
