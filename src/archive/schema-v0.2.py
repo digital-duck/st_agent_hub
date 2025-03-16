@@ -6,53 +6,34 @@ import uuid
 
 
 class MemoryType(str, Enum):
-    NONE = "none"                # No memory capability or undefined
-    SHORT_TERM = "short_term"    # Temporary, limited storage (e.g., conversation context)
-    LONG_TERM = "long_term"      # Persistent storage across sessions
-    EPISODIC = "session"         # Memory of session based memory
-    SEMANTIC = "semantic"        # Conceptual knowledge and factual information
-    OTHER = "other"              # Defined but outside current categories
+    SHORT_TERM = "short_term"
+    LONG_TERM = "long_term"
+    EPISODIC = "session"  # "episodic"
+    SEMANTIC = "semantic"
+    NONE = "none"
 
 
 class PlanningCapability(str, Enum):
-    NONE = "none"                # No planning capability or undefined
-    BASIC = "basic"              # Simple, linear planning
-    ADVANCED = "advanced"        # Complex planning with contingencies
-    RECURSIVE = "recursive"      # Self-referential planning where agent plans about its own plans
-    HIERARCHICAL = "hierarchical"# Multi-level planning with different abstractions at each level
-    OTHER = "other"              # Defined but outside current categories
+    NONE = "none"
+    BASIC = "basic"
+    ADVANCED = "advanced"
+    RECURSIVE = "recursive"
+    HIERARCHICAL = "hierarchical"
 
 
 class ToolUseCapability(str, Enum):
-    NONE = "none"                # No tool use capability or undefined
-    PREDEFINED = "predefined"    # Can use specific, pre-configured tools
-    DYNAMIC = "dynamic"          # Can adapt to and use new tools at runtime
-    TOOL_CREATION = "tool_creation"  # Can create new tools/functions
-    OTHER = "other"              # Defined but outside current categories
+    NONE = "none"
+    PREDEFINED = "predefined"
+    DYNAMIC = "dynamic"
+    TOOL_CREATION = "tool_creation"
 
 
 class ProviderType(str, Enum):
-    NONE = "none"                # No provider information or undefined
-    COMPANY = "company"          # Commercial organization (Microsoft, Anthropic)
-    FRAMEWORK = "framework"      # Software framework (LlamaIndex, LangChain)
-    OPEN_SOURCE = "open_source"  # Open source project (AG2, agno)
-    RESEARCH = "research"        # Research institution/lab (Camel)
-    OTHER = "other"              # Defined but outside current categories
-
-
-class AgentDomain(str, Enum):
-    NONE = "none"                # No specific domain or undefined
-    GENERAL = "general"          # General-purpose agent
-    CUSTOMER_SERVICE = "customer_service"
-    DATA_ANALYSIS = "data_analysis"
-    CREATIVE = "creative"
-    CODING = "coding"
-    RESEARCH = "research"
-    EDUCATION = "education"
-    HEALTHCARE = "healthcare"
-    FINANCE = "finance"
-    LEGAL = "legal"
-    OTHER = "other"              # Defined but outside current categories
+    COMPANY = "company"           # Commercial organization (Microsoft, Anthropic)
+    FRAMEWORK = "framework"       # Software framework (LlamaIndex, LangChain)
+    OPEN_SOURCE = "open_source"   # Open source project (AG2, agno)
+    RESEARCH = "research"         # Research institution/lab (Camel)
+    OTHER = "other"               # Other type
 
 
 class Provider(BaseModel):
@@ -73,8 +54,7 @@ class Provider(BaseModel):
 
 class LLMSupport(BaseModel):
     model_name: str
-    provider_id: Optional[str] = None
-    provider: Optional[Provider] = None  # Populated from provider_id
+    provider: str  # e.g., OpenAI, Anthropic, etc.
     min_version: Optional[str] = None
     notes: Optional[str] = None
     performance_rating: Optional[int] = None  # 1-5 scale
@@ -82,8 +62,7 @@ class LLMSupport(BaseModel):
 
 class VectorStore(BaseModel):
     name: str
-    provider_id: Optional[str] = None
-    provider: Optional[Provider] = None  # Populated from provider_id
+    provider: Optional[str] = None
     url: Optional[HttpUrl] = None
     description: Optional[str] = None
     supported_dimensions: Optional[List[int]] = None
@@ -93,8 +72,7 @@ class VectorStore(BaseModel):
 class MemoryStore(BaseModel):
     name: str
     type: MemoryType
-    provider_id: Optional[str] = None
-    provider: Optional[Provider] = None  # Populated from provider_id
+    provider: Optional[str] = None
     url: Optional[HttpUrl] = None
     description: Optional[str] = None
     notes: Optional[str] = None
@@ -132,6 +110,19 @@ class ResourceRequirement(BaseModel):
     estimated_cost_per_hour: Optional[float] = None
     notes: Optional[str] = None
 
+
+class AgentDomain(str, Enum):
+    GENERAL = "general"
+    CUSTOMER_SERVICE = "customer_service"
+    DATA_ANALYSIS = "data_analysis"
+    CREATIVE = "creative"
+    CODING = "coding"
+    RESEARCH = "research"
+    EDUCATION = "education"
+    HEALTHCARE = "healthcare"
+    FINANCE = "finance"
+    LEGAL = "legal"
+    OTHER = "other"
 
 
 class AgentMetadata(BaseModel):

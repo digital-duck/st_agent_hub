@@ -56,52 +56,9 @@ def seed_data():
         docs_url="https://docs.llamaindex.ai/"
     )
     
-    # Add LLM providers
-    openai_provider = Provider(
-        name="OpenAI",
-        description="OpenAI is an AI research and deployment company dedicated to ensuring that artificial general intelligence benefits all of humanity.",
-        url="https://openai.com/",
-        provider_type=ProviderType.COMPANY,
-        github_url="https://github.com/openai",
-        docs_url="https://platform.openai.com/docs"
-    )
-    
-    anthropic_provider = Provider(
-        name="Anthropic",
-        description="Anthropic is an AI safety company working to build reliable, interpretable, and steerable AI systems.",
-        url="https://www.anthropic.com/",
-        provider_type=ProviderType.COMPANY,
-        docs_url="https://docs.anthropic.com/"
-    )
-    
-    # Add vector store provider
-    facebook_provider = Provider(
-        name="Facebook",
-        description="Meta (formerly Facebook) is a technology company focused on building products that facilitate connection and communication.",
-        url="https://ai.meta.com/",
-        provider_type=ProviderType.COMPANY,
-        github_url="https://github.com/facebookresearch",
-        docs_url="https://ai.meta.com/resources/"
-    )
-    
-    # Add memory store provider
-    redis_provider = Provider(
-        name="Redis",
-        description="Redis is an open source, in-memory data structure store used as a database, cache, message broker, and streaming engine.",
-        url="https://redis.io/",
-        provider_type=ProviderType.OPEN_SOURCE,
-        github_url="https://github.com/redis/redis",
-        docs_url="https://redis.io/docs/"
-    )
-    
-    # Add all providers to the database
     db.add_provider(autogen_provider)
     db.add_provider(agno_provider)
     db.add_provider(llamaindex_framework)
-    db.add_provider(openai_provider)
-    db.add_provider(anthropic_provider)
-    db.add_provider(facebook_provider)
-    db.add_provider(redis_provider)
     
     # Sample agent for AutoGen
     autogen_agent = AgentMetadata(
@@ -119,31 +76,14 @@ def seed_data():
             reasoning_frameworks=["ReAct", "CoT"]
         ),
         supported_llms=[
-            LLMSupport(
-                model_name="GPT-4", 
-                provider_id=openai_provider.id,
-                performance_rating=5
-            ),
-            LLMSupport(
-                model_name="Claude 3", 
-                provider_id=anthropic_provider.id,
-                performance_rating=5
-            )
+            LLMSupport(model_name="GPT-4", provider="OpenAI", performance_rating=5),
+            LLMSupport(model_name="Claude 3", provider="Anthropic", performance_rating=5)
         ],
         vector_stores=[
-            VectorStore(
-                name="FAISS", 
-                provider_id=facebook_provider.id,
-                description="In-memory vector store optimized for similarity search"
-            )
+            VectorStore(name="FAISS", provider="Facebook", description="In-memory vector store optimized for similarity search")
         ],
         memory_stores=[
-            MemoryStore(
-                name="Redis", 
-                type=MemoryType.LONG_TERM,
-                provider_id=redis_provider.id, 
-                description="Distributed key-value store with persistence options"
-            )
+            MemoryStore(name="Redis", type=MemoryType.LONG_TERM, description="Distributed key-value store with persistence options")
         ],
         domains=[AgentDomain.GENERAL, AgentDomain.CODING, AgentDomain.RESEARCH],
         code_snippets=[
@@ -184,32 +124,6 @@ user_proxy.initiate_chat(
     )
     
     db.add_agent(autogen_agent)
-
-# Function to get provider selection options
-def get_provider_options(db, filter_type=None, include_none=True):
-    """Get provider selection options with proper formatting.
-    
-    Args:
-        db: Database instance
-        filter_type: Optional ProviderType to filter providers
-        include_none: Whether to include a "None" option
-        
-    Returns:
-        Dictionary of {id: display_name} for providers
-    """
-    if filter_type:
-        providers = db.get_providers_by_type(filter_type)
-    else:
-        providers = db.get_all_providers()
-    
-    # Create options dictionary
-    options = {p.id: f"{p.name} ({p.provider_type.value})" for p in providers}
-    
-    # Add "None" option if requested
-    if include_none:
-        options["none"] = "None (Unspecified)"
-        
-    return options
 
 # For direct execution of app.py
 if __name__ == "__main__":

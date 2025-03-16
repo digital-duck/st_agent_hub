@@ -38,30 +38,7 @@ class JSONDatabase:
                 agents_data = json.load(f)
                 for agent_dict in agents_data:
                     agent = AgentMetadata(**agent_dict)
-                    # Link provider references
-                    self._link_provider_references(agent)
                     self.agents[agent.id] = agent
-    
-    def _link_provider_references(self, agent: AgentMetadata):
-        """Link all provider references in an agent object."""
-        # Link main provider
-        if agent.provider_id and agent.provider_id in self.providers:
-            agent.provider = self.providers[agent.provider_id]
-        
-        # Link LLM providers
-        for llm in agent.supported_llms:
-            if llm.provider_id and llm.provider_id in self.providers:
-                llm.provider = self.providers[llm.provider_id]
-        
-        # Link vector store providers
-        for vs in agent.vector_stores:
-            if vs.provider_id and vs.provider_id in self.providers:
-                vs.provider = self.providers[vs.provider_id]
-        
-        # Link memory store providers
-        for ms in agent.memory_stores:
-            if ms.provider_id and ms.provider_id in self.providers:
-                ms.provider = self.providers[ms.provider_id]
     
     def _save_data(self):
         """Save all data to JSON files."""
@@ -97,11 +74,6 @@ class JSONDatabase:
         if provider.id not in self.providers:
             raise ValueError(f"Provider with ID {provider.id} not found")
         self.providers[provider.id] = provider
-        
-        # Update provider references in all agents
-        for agent in self.agents.values():
-            self._link_provider_references(agent)
-        
         self._save_data()
         return provider
     
@@ -110,35 +82,15 @@ class JSONDatabase:
         if provider_id not in self.providers:
             return False
         del self.providers[provider_id]
-        
-        # Remove provider references in all agents
-        for agent in self.agents.values():
-            if agent.provider_id == provider_id:
-                agent.provider = None
-            
-            # Clear LLM providers
-            for llm in agent.supported_llms:
-                if llm.provider_id == provider_id:
-                    llm.provider = None
-            
-            # Clear vector store providers
-            for vs in agent.vector_stores:
-                if vs.provider_id == provider_id:
-                    vs.provider = None
-            
-            # Clear memory store providers
-            for ms in agent.memory_stores:
-                if ms.provider_id == provider_id:
-                    ms.provider = None
-        
         self._save_data()
         return True
     
     # Agent operations
     def add_agent(self, agent: AgentMetadata) -> AgentMetadata:
         """Add a new agent to the database."""
-        # Link all provider references
-        self._link_provider_references(agent)
+        # Link provider object
+        if agent.provider_id in self.providers:
+            agent.provider = self.providers[agent.provider_id]
         
         self.agents[agent.id] = agent
         self._save_data()
@@ -157,8 +109,9 @@ class JSONDatabase:
         if agent.id not in self.agents:
             raise ValueError(f"Agent with ID {agent.id} not found")
         
-        # Link all provider references
-        self._link_provider_references(agent)
+        # Link provider object
+        if agent.provider_id in self.providers:
+            agent.provider = self.providers[agent.provider_id]
         
         self.agents[agent.id] = agent
         self._save_data()
