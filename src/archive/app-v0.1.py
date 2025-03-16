@@ -2,10 +2,10 @@ import os
 import streamlit as st
 from database import JSONDatabase
 from schema import (
-    Provider, AgentMetadata, AgentFeatures, 
+    Provider, Framework, AgentMetadata, AgentFeatures, 
     LLMSupport, VectorStore, MemoryStore, CodeSnippet,
     ResourceRequirement, MemoryType, PlanningCapability,
-    ToolUseCapability, AgentDomain, ProviderType
+    ToolUseCapability, AgentDomain
 )
 
 # Common utility functions that can be shared across pages
@@ -22,15 +22,14 @@ def seed_data():
     db = JSONDatabase()
     
     # Only seed if no data exists
-    if db.get_all_providers() or db.get_all_agents():
+    if db.get_all_providers() or db.get_all_frameworks() or db.get_all_agents():
         return
     
-    # Add providers (companies)
+    # Add providers
     autogen_provider = Provider(
         name="Microsoft AutoGen",
         description="AutoGen is a framework that enables the development of LLM applications using multiple agents that can converse with each other to solve tasks.",
         url="https://microsoft.github.io/autogen/",
-        provider_type=ProviderType.COMPANY,
         github_url="https://github.com/microsoft/autogen",
         docs_url="https://microsoft.github.io/autogen/docs/Getting-Started",
         support_email="autogen-support@microsoft.com"
@@ -40,25 +39,23 @@ def seed_data():
         name="Agno (formerly phidata)",
         description="Agno is a platform for building, testing, and deploying AI agents with a focus on ease of use and enterprise-grade features.",
         url="https://agno.app/",
-        provider_type=ProviderType.COMPANY,
         github_url="https://github.com/agnoai/agno",
         docs_url="https://docs.agno.app/"
     )
     
-    # Add framework providers
-    llamaindex_framework = Provider(
+    db.add_provider(autogen_provider)
+    db.add_provider(agno_provider)
+    
+    # Add frameworks
+    llamaindex_framework = Framework(
         name="LlamaIndex",
         description="LlamaIndex is a data framework for LLM applications to ingest, structure, and access private or domain-specific data.",
         url="https://www.llamaindex.ai/",
-        provider_type=ProviderType.FRAMEWORK,
-        version="0.10.x",
         github_url="https://github.com/run-llama/llama_index",
-        docs_url="https://docs.llamaindex.ai/"
+        version="0.10.x"
     )
     
-    db.add_provider(autogen_provider)
-    db.add_provider(agno_provider)
-    db.add_provider(llamaindex_framework)
+    db.add_framework(llamaindex_framework)
     
     # Sample agent for AutoGen
     autogen_agent = AgentMetadata(
@@ -133,6 +130,6 @@ if __name__ == "__main__":
     # Seed initial data
     seed_data()
     
-    # Run the main page
-    import AI_Agent_Hub
-    AI_Agent_Hub.main()
+    # Run the main page (this should redirect to main.py in a multi-page app)
+    import main
+    main.main()

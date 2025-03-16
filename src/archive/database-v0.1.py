@@ -1,7 +1,7 @@
 import json
 import os
 from typing import List, Optional, Dict, Any
-from schema import AgentMetadata, Provider
+from schema import AgentMetadata, Provider, Framework
 
 
 class JSONDatabase:
@@ -10,10 +10,12 @@ class JSONDatabase:
     def __init__(self, data_dir: str = "../data"):
         self.data_dir = data_dir
         self.providers_file = os.path.join(data_dir, "providers.json")
+        self.frameworks_file = os.path.join(data_dir, "frameworks.json")
         self.agents_file = os.path.join(data_dir, "agents.json")
         
         # Initialize data storage
         self.providers: Dict[str, Provider] = {}
+        self.frameworks: Dict[str, Framework] = {}
         self.agents: Dict[str, AgentMetadata] = {}
         
         # Ensure data directory exists
@@ -32,6 +34,14 @@ class JSONDatabase:
                     provider = Provider(**provider_dict)
                     self.providers[provider.id] = provider
         
+        # Load frameworks
+        if os.path.exists(self.frameworks_file):
+            with open(self.frameworks_file, 'r') as f:
+                frameworks_data = json.load(f)
+                for framework_dict in frameworks_data:
+                    framework = Framework(**framework_dict)
+                    self.frameworks[framework.id] = framework
+        
         # Load agents
         if os.path.exists(self.agents_file):
             with open(self.agents_file, 'r') as f:
@@ -45,6 +55,10 @@ class JSONDatabase:
         # Save providers
         with open(self.providers_file, 'w') as f:
             json.dump([provider.dict() for provider in self.providers.values()], f, default=str, indent=2)
+        
+        # Save frameworks
+        with open(self.frameworks_file, 'w') as f:
+            json.dump([framework.dict() for framework in self.frameworks.values()], f, default=str, indent=2)
         
         # Save agents
         with open(self.agents_file, 'w') as f:
@@ -65,10 +79,6 @@ class JSONDatabase:
         """Get all providers."""
         return list(self.providers.values())
     
-    def get_providers_by_type(self, provider_type: str) -> List[Provider]:
-        """Get providers filtered by type."""
-        return [p for p in self.providers.values() if p.provider_type == provider_type]
-    
     def update_provider(self, provider: Provider) -> Provider:
         """Update an existing provider."""
         if provider.id not in self.providers:
@@ -85,12 +95,46 @@ class JSONDatabase:
         self._save_data()
         return True
     
+    # Framework operations
+    def add_framework(self, framework: Framework) -> Framework:
+        """Add a new framework to the database."""
+        self.frameworks[framework.id] = framework
+        self._save_data()
+        return framework
+    
+    def get_framework(self, framework_id: str) -> Optional[Framework]:
+        """Get a framework by ID."""
+        return self.frameworks.get(framework_id)
+    
+    def get_all_frameworks(self) -> List[Framework]:
+        """Get all frameworks."""
+        return list(self.frameworks.values())
+    
+    def update_framework(self, framework: Framework) -> Framework:
+        """Update an existing framework."""
+        if framework.id not in self.frameworks:
+            raise ValueError(f"Framework with ID {framework.id} not found")
+        self.frameworks[framework.id] = framework
+        self._save_data()
+        return framework
+    
+    def delete_framework(self, framework_id: str) -> bool:
+        """Delete a framework by ID."""
+        if framework_id not in self.frameworks:
+            return False
+        del self.frameworks[framework_id]
+        self._save_data()
+        return True
+    
     # Agent operations
     def add_agent(self, agent: AgentMetadata) -> AgentMetadata:
         """Add a new agent to the database."""
-        # Link provider object
+        # Link provider and framework objects
         if agent.provider_id in self.providers:
             agent.provider = self.providers[agent.provider_id]
+        
+        if agent.framework_id in self.frameworks:
+            agent.framework = self.frameworks[agent.framework_id]
         
         self.agents[agent.id] = agent
         self._save_data()
@@ -109,9 +153,12 @@ class JSONDatabase:
         if agent.id not in self.agents:
             raise ValueError(f"Agent with ID {agent.id} not found")
         
-        # Link provider object
+        # Link provider and framework objects
         if agent.provider_id in self.providers:
             agent.provider = self.providers[agent.provider_id]
+        
+        if agent.framework_id in self.frameworks:
+            agent.framework = self.frameworks[agent.framework_id]
         
         self.agents[agent.id] = agent
         self._save_data()
@@ -138,6 +185,7 @@ class JSONDatabase:
     
     def filter_agents(self, 
                      provider_id: Optional[str] = None,
+                     framework_id: Optional[str] = None,
                      domains: Optional[List[str]] = None,
                      features: Optional[Dict[str, Any]] = None) -> List[AgentMetadata]:
         """Filter agents by various criteria."""
@@ -145,6 +193,9 @@ class JSONDatabase:
         
         if provider_id:
             results = [agent for agent in results if agent.provider_id == provider_id]
+        
+        if framework_id:
+            results = [agent for agent in results if agent.framework_id == framework_id]
         
         if domains:
             results = [agent for agent in results if any(domain in agent.domains for domain in domains)]

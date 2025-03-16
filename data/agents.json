@@ -10,6 +10,8 @@
       "name": "Microsoft AutoGen",
       "description": "AutoGen is a framework that enables the development of LLM applications using multiple agents that can converse with each other to solve tasks.",
       "url": "https://microsoft.github.io/autogen/",
+      "provider_type": "company",
+      "version": null,
       "created_at": "2025-03-15 13:08:28.123343",
       "updated_at": "2025-03-15 13:08:28.123345",
       "logo_url": null,
@@ -18,8 +20,6 @@
       "support_email": "autogen-support@microsoft.com",
       "support_url": null
     },
-    "framework_id": null,
-    "framework": null,
     "features": {
       "planning": "advanced",
       "memory": [

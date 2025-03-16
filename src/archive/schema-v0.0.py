@@ -28,21 +28,11 @@ class ToolUseCapability(str, Enum):
     TOOL_CREATION = "tool_creation"
 
 
-class ProviderType(str, Enum):
-    COMPANY = "company"           # Commercial organization (Microsoft, Anthropic)
-    FRAMEWORK = "framework"       # Software framework (LlamaIndex, LangChain)
-    OPEN_SOURCE = "open_source"   # Open source project
-    RESEARCH = "research"         # Research institution/lab
-    OTHER = "other"               # Other type
-
-
 class Provider(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: str
     description: str
     url: HttpUrl
-    provider_type: ProviderType = ProviderType.COMPANY   # Indicates if this is a company or framework
-    version: Optional[str] = None                        # For frameworks
     created_at: datetime = Field(default_factory=datetime.now)
     updated_at: datetime = Field(default_factory=datetime.now)
     logo_url: Optional[HttpUrl] = None
@@ -50,6 +40,18 @@ class Provider(BaseModel):
     docs_url: Optional[HttpUrl] = None
     support_email: Optional[str] = None
     support_url: Optional[HttpUrl] = None
+
+
+class Framework(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str
+    description: str
+    url: HttpUrl
+    github_url: Optional[HttpUrl] = None  # Make sure these optional fields are defined
+    docs_url: Optional[HttpUrl] = None    # This is missing in your current schema
+    version: Optional[str] = None
+    created_at: datetime = Field(default_factory=datetime.now)
+    updated_at: Optional[datetime] = None
 
 
 class LLMSupport(BaseModel):
@@ -132,6 +134,8 @@ class AgentMetadata(BaseModel):
     version: str
     provider_id: str
     provider: Optional[Provider] = None  # Populated from provider_id
+    framework_id: Optional[str] = None
+    framework: Optional[Framework] = None  # Populated from framework_id
     
     # Core capabilities
     features: AgentFeatures
