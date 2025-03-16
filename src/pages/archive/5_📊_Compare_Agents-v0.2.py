@@ -20,7 +20,7 @@ st.set_page_config(
 db = JSONDatabase()
 
 # Page title
-st.title("Compare Agents")
+st.header("Compare Agents")
 
 # Get all agents
 agents = db.get_all_agents()

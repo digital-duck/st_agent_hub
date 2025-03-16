@@ -19,7 +19,7 @@ st.set_page_config(
 db = JSONDatabase()
 
 # Page title
-st.title("Browse & Search Agents")
+st.header("Browse & Search Agents")
 
 # Sidebar filters
 st.sidebar.header("Filters")

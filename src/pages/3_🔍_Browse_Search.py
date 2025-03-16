@@ -7,11 +7,11 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from schema import AgentDomain, PlanningCapability, ToolUseCapability, MemoryType
 from database import JSONDatabase
-from app import get_provider_options
+from utils import get_provider_options
 
 # Set page configuration
 st.set_page_config(
-    page_title="AI Agent Hub - Browse & Search",
+    page_title="Agent-Search",
     page_icon="🔍",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -21,7 +21,7 @@ st.set_page_config(
 db = JSONDatabase()
 
 # Page title
-st.title("🔍 Browse & Search Agents")
+st.header("🔍 Browse & Search Agents")
 st.markdown("""
 Find AI agents based on their capabilities, features, and domains. Use the filters on the sidebar to narrow down your search.
 """)
@@ -356,7 +356,7 @@ if "selected_agent" in st.session_state:
                         # Set the agent_id in session state for the Agents page
                         st.session_state["selected_agent_id"] = agent.id
                         # Navigate to the Agents page
-                        st.switch_page("pages/3_🤖_Agents.py")
+                        st.switch_page("pages/2_🤖_Agents.py")
             
             # Tab 2: Features
             with detail_tabs[1]:

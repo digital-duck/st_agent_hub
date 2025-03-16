@@ -1,6 +1,6 @@
 # AI Agent Hub
 
-A central registry and explorer for AI agents across different frameworks and platforms.
+A registry app to manage AI agents across different frameworks and platforms.
 
 ## Project Overview
 
@@ -10,8 +10,7 @@ The AI Agent Hub is a comprehensive tool for documenting, discovering, comparing
 
 - **Agent Registry**: Catalog AI agents with detailed metadata
 - **Provider Directory**: Information about companies and organizations building AI agents
-- **Framework Documentation**: Details on frameworks used to build agents
-- **Search & Filter**: Find agents based on capabilities, requirements, and domains
+- **Search**: Find agents based on capabilities, requirements, and domains
 - **Comparison Tools**: Side-by-side comparison of agent features
 - **Code Examples**: Implementation examples for various agents
 
@@ -24,29 +23,35 @@ st_agent_hub/
 │   ├── database.py  # Database implementation
 │   ├── app.py       # Streamlit app implementation
 │   └── main.py      # Entry point with data seeding
-├   ├── data/        # Directory for JSON database files
-├   └── pages/
-├       ├── 1_Providers.py
-├       ├── 2_Frameworks.py
-├       ├── 3_Agents.py
-├       ├── 4_Browse_Search.py
-├       ├── 5_Compare_Agents.py
+│   ├── data/        # Directory for JSON database files
+│   └── pages/
+│       ├── 1_Providers.py
+│       ├── 2_Agents.py
+│       ├── 3_Browse_Search.py
+│       ├── 4_Compare_Agents.py
 ├── docs/            # Documentation
 │   ├── images/      # Images for documentation
 │   └── design/      # Design artifacts
+├── data/            # Data files
+│   ├── agents.json         # Agents
+│   └── providers.json      # Providers
 ├── dev/             # Development resources
 │   └── notebooks/   # Jupyter notebooks for experiments
 ├── tests/           # Test suite
 ├── scripts/         # Utility scripts
+│   ├── run_app.sh          # create project layout initially
+│   └── archive_code.sh     # archive codes when developing with AI assistants
 ├── requirements.txt # Dependencies
-└── LICENSE.md       # License information
+└── README.md          # this file
+└── RELEASE.md         # track changes
+└── LICENSE            # License
 ```
 
 ## Installation
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/st_agent_hub.git
+   git clone https://github.com/digital-duck/st_agent_hub.git
    cd st_agent_hub
    ```
 
@@ -56,9 +61,10 @@ st_agent_hub/
    ```
 
 3. Run the application:
-   ```bash
-   streamlit run src/main.py
-   ```
+```bash
+cd src
+streamlit run AI_Agent_Hub.py
+```
 
 ## Contributing
 
@@ -66,4 +72,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the Apache License - see the [LICENSE](LICENSE)

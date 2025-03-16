@@ -22,7 +22,7 @@ st.set_page_config(
 db = JSONDatabase()
 
 # Page title
-st.title("AI Agent Providers & Frameworks")
+st.header("AI Agent Providers & Frameworks")
 
 # Filter providers by type
 provider_type_filter = st.radio(

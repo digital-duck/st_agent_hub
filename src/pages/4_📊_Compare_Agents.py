@@ -7,11 +7,11 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from database import JSONDatabase
-from app import get_provider_options
+from utils import get_provider_options
 
 # Set page configuration
 st.set_page_config(
-    page_title="AI Agent Hub - Compare Agents",
+    page_title="Agent-Compare",
     page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -21,7 +21,7 @@ st.set_page_config(
 db = JSONDatabase()
 
 # Page title
-st.title("📊 Compare Agents")
+st.header("📊 Compare Agents")
 st.markdown("""
 Compare different AI agents side-by-side to see their strengths, capabilities, and features.
 Select up to 4 agents to compare them across different dimensions.

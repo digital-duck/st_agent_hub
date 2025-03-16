@@ -19,7 +19,7 @@ st.set_page_config(
 db = JSONDatabase()
 
 # Page title
-st.title("Compare Agents")
+st.header("Compare Agents")
 
 # Get all agents
 all_agents = db.get_all_agents()
@@ -31,7 +31,7 @@ if not all_agents or len(all_agents) < 2:
     
     # Add button to navigate to Agents page
     if st.button("Go to Agents Page"):
-        st.switch_page("pages/3_🤖_Agents.py")
+        st.switch_page("pages/2_🤖_Agents.py")
     
     # Add expandable information about the comparison feature
     with st.expander("About the comparison feature"):

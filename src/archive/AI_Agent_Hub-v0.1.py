@@ -22,7 +22,7 @@ def main():
     )
     
     # Home page content
-    st.title("AI Agent Hub")
+    st.header("AI Agent Hub")
     st.markdown("""
     Welcome to the AI Agent Hub - a central repository for discovering, comparing, and managing AI agents.
     

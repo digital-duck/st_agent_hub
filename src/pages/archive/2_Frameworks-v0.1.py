@@ -20,7 +20,7 @@ st.set_page_config(
 db = JSONDatabase()
 
 # Page title
-st.title("AI Agent Frameworks")
+st.header("AI Agent Frameworks")
 
 # Tabs for listing and adding frameworks
 tab1, tab2 = st.tabs(["List Frameworks", "Add/Edit Framework"])

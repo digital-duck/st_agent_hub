@@ -8,11 +8,11 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from schema import Provider, ProviderType
 from database import JSONDatabase
-from app import url_input
+from utils import url_input
 
 # Set page configuration
 st.set_page_config(
-    page_title="AI Agent Hub - Providers",
+    page_title="Agent-Providers",
     page_icon="🏢",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -22,7 +22,7 @@ st.set_page_config(
 db = JSONDatabase()
 
 # Page title
-st.title("🏢 AI Agent Providers & Frameworks")
+st.header("🏢 Agent Providers & Frameworks")
 st.markdown("""
 Manage providers and frameworks that create AI agents. Add details like website links, 
 documentation, and contact information.

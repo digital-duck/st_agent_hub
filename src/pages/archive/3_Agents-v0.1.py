@@ -24,7 +24,7 @@ st.set_page_config(
 db = JSONDatabase()
 
 # Page title
-st.title("AI Agents")
+st.header("AI Agents")
 
 # Tabs for listing and adding agents
 tab1, tab2 = st.tabs(["List Agents", "Add/Edit Agent"])

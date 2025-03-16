@@ -15,22 +15,13 @@ Key attributes:
 - Support contact information
 - GitHub repository and documentation links
 
-### Framework
-
-Represents a software framework used to build AI agents.
-
-Key attributes:
-- Name, description, and URL
-- GitHub repository and documentation links
-- Version information
-
 ### AgentMetadata
 
 Detailed information about an AI agent, including its capabilities, requirements, and examples.
 
 Key attributes:
 - Basic information (name, description, version)
-- Provider and framework references
+- Provider references
 - Features and capabilities
 - Technical requirements
 - Supported LLMs and memory stores
@@ -60,8 +51,8 @@ Key attributes:
 
 ## Design Decisions
 
-1. **Provider-Framework-Agent Hierarchy**
-   - Agents are associated with providers (companies) and optionally frameworks
+1. **Provider-Agent Hierarchy**
+   - Agents are associated with providers (companies/frameworks) 
    - This allows filtering and organization by ecosystem
 
 2. **Feature Classification**

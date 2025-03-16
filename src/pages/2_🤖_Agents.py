@@ -14,11 +14,11 @@ from schema import (
     ResourceRequirement, ProviderType
 )
 from database import JSONDatabase
-from app import url_input, get_provider_options
+from utils import url_input, get_provider_options
 
 # Set page configuration
 st.set_page_config(
-    page_title="AI Agent Hub - Agents",
+    page_title="Agent-Manage",
     page_icon="🤖",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -28,7 +28,7 @@ st.set_page_config(
 db = JSONDatabase()
 
 # Page title
-st.title("🤖 AI Agents")
+st.header("🤖 Manage Agents")
 st.markdown("""
 Manage AI agents from different providers. Add details about their capabilities, features, and implementation details.
 """)

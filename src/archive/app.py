@@ -7,6 +7,7 @@ from schema import (
     ResourceRequirement, MemoryType, PlanningCapability,
     ToolUseCapability, AgentDomain, ProviderType
 )
+from Welcome import welcome
 
 # Common utility functions that can be shared across pages
 def url_input(label, key=None, value=None):
@@ -220,5 +221,4 @@ if __name__ == "__main__":
     seed_data()
     
     # Run the main page
-    import AI_Agent_Hub
-    AI_Agent_Hub.main()
+    welcome()

@@ -20,7 +20,7 @@ st.set_page_config(
 db = JSONDatabase()
 
 # Page title
-st.title("Browse & Search Agents")
+st.header("Browse & Search Agents")
 
 # Get all data
 agents = db.get_all_agents()
@@ -201,7 +201,7 @@ if "selected_agent" in st.session_state:
                 st.session_state.pop("selected_agent")
                 st.rerun()
             
-            st.title(agent.name)
+            st.header(agent.name)
             st.caption(f"Version: {agent.version}")
             
             # Basic info
